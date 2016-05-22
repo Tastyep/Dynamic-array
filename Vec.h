@@ -11,14 +11,14 @@ struct {\
     size_t capacity;\
 }
 
-#define vec_init(vec)\
-(vec).data = NULL; (vec).size = 0; (vec).capacity = 0;
-
 #define vec_attr(vec)\
-(char **)(&(vec).data), &(vec).size, &(vec).capacity
+    (char **)(&(vec).data), &(vec).size, &(vec).capacity
 
 #define data_size(vec)\
-sizeof(*((vec).data))
+    sizeof(*((vec).data))
+    
+#define vec_init(vec)\
+    (vec).data = NULL; (vec).size = 0; (vec).capacity = 0;
 
 #define vec_push_back(vec, value)\
     vec_expand(vec_attr(vec), data_size(vec));\
@@ -31,11 +31,18 @@ sizeof(*((vec).data))
 #define vec_back(vec)\
     (vec).data[(vec).size]
 
+#define vec_front(vec)\
+    (vec).data[0]
+
+
 #define vec_at(vec, idx)\
     (vec).data[idx]
 
 #define vec_size(vec)\
     (vec).size
+
+#define vec_capacity(vec)\
+    (vec).capacity
 
 int vec_expand(char **data, size_t *size, size_t *capacity, unsigned int data_size);
 
