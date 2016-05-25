@@ -72,6 +72,9 @@ struct {\
 #define distribute_erase(_1,_2,_3,FUNC,...) FUNC
 #define vec_erase(...) distribute_erase(__VA_ARGS__, vec_erase_2, vec_erase_1)(__VA_ARGS__)
 
+#define vec_clear(vec)\
+    vec_erase_2(vec, 0, vec_size(vec));
+
 void vector_erase(char **data, size_t *size, size_t *capacity, unsigned int data_size, size_t beg, size_t end);
 int vector_expand(char **data, size_t *size, size_t *capacity, unsigned int data_size);
 int vector_reserve(char **data, size_t *capacity, unsigned int data_size, size_t new_capacity);

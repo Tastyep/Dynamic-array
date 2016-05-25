@@ -62,14 +62,18 @@ void eraseTest() {
  printf("Capacity: %lu, Size: %lu\n", vec_capacity(intVec), vec_size(intVec));
  vec_erase(intVec, 0, 10);
  vec_erase(intVec, 0);
+ vec_erase(intVec, 5);
+ printf("Capacity: %lu, Size: %lu\n", vec_capacity(intVec), vec_size(intVec));
  for (unsigned int i = 0; i < vec_size(intVec); ++i) {
    printf("%d", vec_at(intVec, i));
    if (i + 1 != vec_size(intVec))
     printf(",");
  }
+ printf("\n");
+ vec_clear(intVec);
+ printf("Capacity: %lu, Size: %lu\n", vec_capacity(intVec), vec_size(intVec)); 
  printf("\n\n");
 }
-
 
 int main(void) {
   intTest();

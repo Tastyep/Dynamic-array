@@ -34,10 +34,11 @@ void vector_erase(char **data, size_t *size, size_t *capacity, unsigned int data
    free(*data);
    *data = NULL;
    *size = 0;
-   *capacity = 0;
+   *capacity = 0; 
+   return ;
   }
   if (end < *size) {
-   memcpy((*data + beg * data_size), (*data + end * data_size), (*size - end) * data_size);
+   memmove((*data + beg * data_size), (*data + end * data_size), (*size - end) * data_size);
   }
   *size -= block_size;
 }
