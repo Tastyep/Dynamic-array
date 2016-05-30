@@ -6,6 +6,7 @@ void intTest() {
   Vec(int)intVec;
 
   vec_init(intVec);
+  printf("Is the initialized vector empty -> %s\n", (vec_empty(intVec) ? "Yes" : "No"));
   for (unsigned int i = 0; i < 25; ++i)
     vec_push_back(intVec, i);
   printf("Capacity: %lu, Size: %lu\n", vec_capacity(intVec), vec_size(intVec));

@@ -72,6 +72,8 @@ struct {\
 #define vec_capacity(vec)\
     (vec).capacity
     
+#define vec_empty(vec)\
+    ((vec).size == 0)
 
 #define vec_fill(vec, value)\
     if (sizeof((vec).data) == 1)\
