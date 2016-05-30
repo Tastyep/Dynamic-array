@@ -7,8 +7,8 @@
 #define Vec(T)\
 struct {\
     T *data;\
-    size_t size;\
-    size_t capacity;\
+    unsigned int size;\
+    unsigned int capacity;\
 }
 
 #define vec_attr(vec)\
@@ -104,12 +104,12 @@ struct {\
 #define vec_clear(vec)\
     vec_erase_2(vec, 0, vec_size(vec));
 
-void vector_erase(char **data, size_t *size, size_t *capacity, unsigned int data_size, size_t beg, size_t end);
-int vector_expand(char **data, size_t *size, size_t *capacity, unsigned int data_size, unsigned int expanded_size);
-int vector_reserve(char **data, size_t *capacity, unsigned int data_size, size_t new_capacity);
-void vector_insert_array(char **data, size_t *size, unsigned int data_size,
+void vector_erase(char **data, unsigned int *size, unsigned int *capacity, unsigned int data_size, unsigned int beg, unsigned int end);
+int vector_expand(char **data, unsigned int *size, unsigned int *capacity, unsigned int data_size, unsigned int expanded_size);
+int vector_reserve(char **data, unsigned int *capacity, unsigned int data_size, unsigned int new_capacity);
+void vector_insert_array(char **data, unsigned int *size, unsigned int data_size,
                          char *array, unsigned int length, unsigned int position);
-void vector_insert_make_room(char **data, size_t size, unsigned int data_size, unsigned int position, unsigned int length);
+void vector_insert_make_room(char **data, unsigned int size, unsigned int data_size, unsigned int position, unsigned int length);
 
 
 typedef Vec(char) String;

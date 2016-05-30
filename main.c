@@ -9,7 +9,7 @@ void intTest() {
   printf("Is the initialized vector empty -> %s\n", (vec_empty(intVec) ? "Yes" : "No"));
   for (unsigned int i = 0; i < 25; ++i)
     vec_push_back(intVec, i);
-  printf("Capacity: %lu, Size: %lu\n", vec_capacity(intVec), vec_size(intVec));
+  printf("Capacity: %u, Size: %u\n", vec_capacity(intVec), vec_size(intVec));
   for (unsigned int i = 0; i < vec_size(intVec); ++i) {
     printf("%d", vec_at(intVec, i));
     if (i + 1 != vec_size(intVec))
@@ -27,7 +27,7 @@ void capacityTest() {
   vec_reserve(intVec, 30);
 
   vec_fill(intVec, 1);
-  printf("Capacity: %lu, Size: %lu\n", vec_capacity(intVec), vec_size(intVec));
+  printf("Capacity: %u, Size: %u\n", vec_capacity(intVec), vec_size(intVec));
   for (unsigned int i = 0; i < vec_size(intVec); ++i) {
     printf("%d", vec_at(intVec, i));
     if (i + 1 != vec_size(intVec))
@@ -43,7 +43,7 @@ void resizeTest() {
   vec_init(intVec);
   vec_resize(intVec, 40, 1);
 
-  printf("Capacity: %lu, Size: %lu\n", vec_capacity(intVec), vec_size(intVec));
+  printf("Capacity: %u, Size: %u\n", vec_capacity(intVec), vec_size(intVec));
   for (unsigned int i = 0; i < vec_size(intVec); ++i) {
     printf("%d", vec_at(intVec, i));
     if (i + 1 != vec_size(intVec))
@@ -60,11 +60,11 @@ void eraseTest() {
   for (unsigned int i = 0; i < 40; ++i)
     vec_push_back(intVec, i);
 
-  printf("Capacity: %lu, Size: %lu\n", vec_capacity(intVec), vec_size(intVec));
+  printf("Capacity: %u, Size: %u\n", vec_capacity(intVec), vec_size(intVec));
   vec_erase(intVec, 0, 10);
   vec_erase(intVec, 0);
   vec_erase(intVec, 5);
-  printf("Capacity: %lu, Size: %lu\n", vec_capacity(intVec), vec_size(intVec));
+  printf("Capacity: %u, Size: %u\n", vec_capacity(intVec), vec_size(intVec));
   for (unsigned int i = 0; i < vec_size(intVec); ++i) {
     printf("%d", vec_at(intVec, i));
     if (i + 1 != vec_size(intVec))
@@ -72,7 +72,7 @@ void eraseTest() {
   }
   printf("\n");
   vec_clear(intVec);
-  printf("Capacity: %lu, Size: %lu\n", vec_capacity(intVec), vec_size(intVec));
+  printf("Capacity: %u, Size: %u\n", vec_capacity(intVec), vec_size(intVec));
   printf("\n\n");
 }
 
@@ -93,7 +93,7 @@ void insertionTest() {
   vec_insert(intVec, 0, 100);
   vec_insert(intVec, 10, 100);
   vec_insert_vec(intVec, 0, appendVec);
-  printf("Capacity: %lu, Size: %lu\n", vec_capacity(intVec), vec_size(intVec));
+  printf("Capacity: %u, Size: %u\n", vec_capacity(intVec), vec_size(intVec));
   for (unsigned int i = 0; i < vec_size(intVec); ++i) {
     printf("%d", vec_at(intVec, i));
     if (i + 1 != vec_size(intVec))
