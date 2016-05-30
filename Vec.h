@@ -24,32 +24,32 @@ struct {\
     ((char *)(vec).data)
 
 #define vec_push_back(vec, value)\
-{\
+do {\
     vector_expand(vec_attr(vec), data_size(vec), 1);\
     (vec).data[(vec).size] = value;\
     ++(vec).size;\
-}
+} while (0)
 
 #define vec_insert(vec, position, value)\
-{\
+do {\
     vector_expand(vec_attr(vec), data_size(vec), 1);\
     vector_insert_make_room((char **)(&(vec).data), vec_size(vec), data_size(vec), 1, position);\
     (vec).data[position] = value;\
     ++(vec).size;\
-}
+} while (0)
 
 #define vec_insert_array(vec, position, array, length)\
-{\
+do {\
     vector_expand(vec_attr(vec), data_size(vec), length);\
     vector_insert_array((char **)(&(vec).data), &vec_size(vec), data_size(vec), (char *)array, length, position);\
-}
+} while (0)
 
 #define vec_insert_string(vec, position, string)\
-{\
+do {\
     vec_insert_array(vec, position, string, strlen(string));\
     if (vec_size(vec) > 0 && (vec).data[vec_size(vec) - 1] != '\0')\
         vec_push_back(vec, '\0');\
-}
+} while (0)
 
 #define vec_insert_vec(vec_dest, position, vec_src)\
     vec_insert_array(vec_dest, position, (vec_src).data, (vec_src).size)
