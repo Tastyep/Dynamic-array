@@ -21,7 +21,7 @@ struct {\
     (vec).data = NULL; (vec).size = 0; (vec).capacity = 0
 
 #define vec_data(vec)\
-    (char *)(vec).data
+    ((char *)(vec).data)
 
 #define vec_push_back(vec, value)\
 {\
@@ -30,34 +30,29 @@ struct {\
     ++(vec).size;\
 }
 
-#define vec_insert_1(vec, position, value)\
+#define vec_insert(vec, position, value)\
 {\
     vector_expand(vec_attr(vec), data_size(vec), 1);\
-    if (position < vec_size(vec))\
-    {\
-        memmove((char *)(vec).data + (position + 1) * data_size(vec),\
-        (char *)(vec).data + position * data_size(vec),\
-        (vec_size(vec) - position) * data_size(vec));\
-    }\
+    vector_insert_make_room((char **)(&(vec).data), vec_size(vec), data_size(vec), 1, position);\
     (vec).data[position] = value;\
     ++(vec).size;\
 }
 
-#define vec_insert_2(vec, position, array, length)\
+#define vec_insert_array(vec, position, array, length)\
 {\
     vector_expand(vec_attr(vec), data_size(vec), length);\
-    if (position < vec_size(vec))\
-    {\
-        memmove((char *)(vec).data + (position + length) * data_size(vec),\
-        (char *)(vec).data + position * data_size(vec),\
-        (vec_size(vec) - (position + length)) * data_size(vec));\
-    }\
-    memcpy((char *)(vec).data + position * data_size(vec), (char *)array, length * data_size(vec));\
-    (vec).size += length;\
+    vector_insert_array((char **)(&(vec).data), &vec_size(vec), data_size(vec), (char *)array, length, position);\
 }
 
-#define distribute_vec_insert(_1,_2,_3,_4,FUNC,...) FUNC
-#define vec_insert(...) distribute_vec_insert(__VA_ARGS__, vec_insert_2, vec_insert_1)(__VA_ARGS__)
+#define vec_insert_string(vec, position, string)\
+{\
+    vec_insert_array(vec, position, string, strlen(string));\
+    if (vec_size(vec) > 0 && (vec).data[vec_size(vec) - 1] != '\0')\
+        vec_push_back(vec, '\0');\
+}
+
+#define vec_insert_vec(vec_dest, position, vec_src)\
+    vec_insert_array(vec_dest, position, (vec_src).data, (vec_src).size)
 
 #define vec_pop_back(vec)\
     --(vec).size
@@ -110,6 +105,10 @@ struct {\
 void vector_erase(char **data, size_t *size, size_t *capacity, unsigned int data_size, size_t beg, size_t end);
 int vector_expand(char **data, size_t *size, size_t *capacity, unsigned int data_size, unsigned int expanded_size);
 int vector_reserve(char **data, size_t *capacity, unsigned int data_size, size_t new_capacity);
+void vector_insert_array(char **data, size_t *size, unsigned int data_size,
+                         char *array, unsigned int length, unsigned int position);
+void vector_insert_make_room(char **data, size_t size, unsigned int data_size, unsigned int position, unsigned int length);
+
 
 typedef Vec(char) String;
 

@@ -78,15 +78,20 @@ void eraseTest() {
 void insertionTest() {
   printf("--- insertionTest ---\n");
   Vec(int) intVec;
+  Vec(int) appendVec;
+  int tab[] = {105,104,103,102,101};
   String str;
 
   vec_init(intVec);
+  vec_init(appendVec);
   vec_init(str);
   
-  for (unsigned int i = 0; i < 25; ++i)
+  vec_insert_array(appendVec, 0, tab, sizeof(tab) / sizeof(*tab));
+  for (unsigned int i = 0; i < 15; ++i)
     vec_push_back(intVec, i);
   vec_insert(intVec, 0, 100);
   vec_insert(intVec, 10, 100);
+  vec_insert_vec(intVec, 0, appendVec);
   printf("Capacity: %lu, Size: %lu\n", vec_capacity(intVec), vec_size(intVec));
   for (unsigned int i = 0; i < vec_size(intVec); ++i) {
     printf("%d", vec_at(intVec, i));
@@ -94,7 +99,8 @@ void insertionTest() {
       printf(",");
   }
   printf("\n");
-  vec_insert(str, 0, "Hello World !", strlen("Hello World !") + 1); // +1 to also copy the \0
+  vec_insert_string(str, 0, "Hello World !");
+  vec_insert_string(str, 6, "Beautiful ");
   printf("str: [%s]\n", vec_data(str));
   printf("\n");
 }
