@@ -16,7 +16,7 @@ struct {\
     (char **)(&(vec).data), &(vec).size, &(vec).capacity
 
 #define vec_data(vec)\
-    ((char *)(vec).data)
+    (vec).data
 
 #define vec_size(vec)\
     (vec).size
@@ -24,7 +24,7 @@ struct {\
 #define vec_capacity(vec)\
     (vec).capacity
 
-#define data_size(vec)\
+#define vec_data_size(vec)\
     (vec).data_size
 
 #define vec_init(vec)\
@@ -35,23 +35,23 @@ do {\
 
 #define vec_push_back(vec, value)\
 do {\
-    vector_expand(vec_attr(vec), data_size(vec), 1);\
+    vector_expand(vec_attr(vec), vec_data_size(vec), 1);\
     (vec).data[(vec).size] = value;\
     ++(vec).size;\
 } while (0)
 
 #define vec_insert(vec, position, value)\
 do {\
-    vector_expand(vec_attr(vec), data_size(vec), 1);\
-    vector_insert_make_room((char **)(&(vec).data), vec_size(vec), data_size(vec), 1, position);\
+    vector_expand(vec_attr(vec), vec_data_size(vec), 1);\
+    vector_insert_make_room((char **)(&(vec).data), vec_size(vec), vec_data_size(vec), 1, position);\
     (vec).data[position] = value;\
     ++(vec).size;\
 } while (0)
 
 #define vec_insert_array(vec, position, array, length)\
 do {\
-    vector_expand(vec_attr(vec), data_size(vec), length);\
-    vector_insert_array((char **)(&(vec).data), &vec_size(vec), data_size(vec), (char *)array, length, position);\
+    vector_expand(vec_attr(vec), vec_data_size(vec), length);\
+    vector_insert_array((char **)(&(vec).data), &vec_size(vec), vec_data_size(vec), (char *)array, length, position);\
 } while (0)
 
 #define vec_insert_string(vec, position, string)\
@@ -89,7 +89,7 @@ do {\
 } while (0)
 
 #define vec_reserve(vec, size)\
-    vector_reserve((char **)(&(vec).data), &(vec).capacity, data_size(vec), size)
+    vector_reserve((char **)(&(vec).data), &(vec).capacity, vec_data_size(vec), size)
     
 #define vec_resize(vec, vec_size, value)\
 do {\
@@ -101,10 +101,10 @@ do {\
 } while (0)
 
 #define vec_erase_2(vec, pos1, pos2)\
-    vector_erase(vec_attr(vec), data_size(vec), pos1, pos2);
+    vector_erase(vec_attr(vec), vec_data_size(vec), pos1, pos2);
 
 #define vec_erase_1(vec, pos)\
-    vector_erase(vec_attr(vec), data_size(vec), pos, (pos) + 1);
+    vector_erase(vec_attr(vec), vec_data_size(vec), pos, (pos) + 1);
     
 #define distribute_vec_erase(_1,_2,_3,FUNC,...) FUNC
 #define vec_erase(...) distribute_vec_erase(__VA_ARGS__, vec_erase_2, vec_erase_1)(__VA_ARGS__)
@@ -118,6 +118,10 @@ do {\
 */
 #define vec_foreach(vec, value)\
     for (unsigned int i = 0; i < vec_size(vec) && (((value) = (vec).data[i]), 1); ++i)
+    
+#define vec_sort(vec, compar)\
+  qsort(vec_data(vec), vec_size(vec), vec_data_size(vec), compar)
+
 
 void vector_erase(char **data, unsigned int *size, unsigned int *capacity, unsigned int data_size, unsigned int beg, unsigned int end);
 int vector_expand(char **data, unsigned int *size, unsigned int *capacity, unsigned int data_size, unsigned int expanded_size);

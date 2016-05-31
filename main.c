@@ -22,16 +22,13 @@ void basic_test() {
 void capacity_test() {
   printf("--- capacity_test ---\n");
   VectorInt intVec;
-  int value;
 
   vec_init(intVec);
   vec_reserve(intVec, 40);
   vec_reserve(intVec, 30);
 
   vec_fill(intVec, 1);
-  printf("Capacity: %u, Size: %u\n", vec_capacity(intVec), vec_size(intVec));
-  vec_foreach(intVec, value) { printf("%d ", value); }
-  printf("\n\n");
+  printf("Capacity: %u, Size: %u\n\n", vec_capacity(intVec), vec_size(intVec));
 }
 
 void resize_test() {
@@ -101,11 +98,37 @@ void insertion_test() {
   printf("\n");
 }
 
+int compare(const void *a, const void *b) {
+  const int *a1 = a;
+  const int *b1 = b;
+  
+  return *a1 > *b1;
+}
+
+void sort_test() {
+  printf("--- sort_test ---\n");
+  VectorInt intVec;
+  int value;
+
+  vec_init(intVec);
+  for (unsigned int i = 0; i < 25; ++i)
+    vec_push_back(intVec, 25 - i);
+  vec_foreach(intVec, value) {
+    printf("%d ", value);
+  }
+  vec_sort(intVec, &compare);
+  printf("\n");
+  vec_foreach(intVec, value) {
+    printf("%d ", value);
+  }
+}
+
 int main(void) {
   basic_test();
   capacity_test();
   resize_test();
   erase_test();
   insertion_test();
+  sort_test();
   return 0;
 }
