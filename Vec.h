@@ -9,19 +9,29 @@ struct {\
     T *data;\
     unsigned int size;\
     unsigned int capacity;\
+    unsigned int data_size;\
 }
 
 #define vec_attr(vec)\
     (char **)(&(vec).data), &(vec).size, &(vec).capacity
 
-#define data_size(vec)\
-    sizeof(*((vec).data))
-
-#define vec_init(vec)\
-    (vec).data = NULL; (vec).size = 0; (vec).capacity = 0
-
 #define vec_data(vec)\
     ((char *)(vec).data)
+
+#define vec_size(vec)\
+    (vec).size
+
+#define vec_capacity(vec)\
+    (vec).capacity
+
+#define data_size(vec)\
+    (vec).data_size
+
+#define vec_init(vec)\
+do {\
+    (vec).data = NULL; (vec).size = 0; (vec).capacity = 0; (vec).data_size = sizeof(*((vec).data));\
+} while(0)
+
 
 #define vec_push_back(vec, value)\
 do {\
@@ -65,44 +75,49 @@ do {\
 
 #define vec_at(vec, idx)\
     (vec).data[idx]
-
-#define vec_size(vec)\
-    (vec).size
-
-#define vec_capacity(vec)\
-    (vec).capacity
     
 #define vec_empty(vec)\
     ((vec).size == 0)
 
 #define vec_fill(vec, value)\
+do {\
     if (sizeof((vec).data) == 1)\
         memset((vec).data, value, (vec).size);\
     else\
         for (unsigned int i = 0; i < vec_size(vec); ++i)\
-            (vec).data[i] = value;
+            (vec).data[i] = (value);\
+} while (0)
 
 #define vec_reserve(vec, size)\
     vector_reserve((char **)(&(vec).data), &(vec).capacity, data_size(vec), size)
     
 #define vec_resize(vec, vec_size, value)\
+do {\
     vec_reserve(vec, vec_size);\
     if ((vec).size < vec_size) {\
-        (vec).size = vec_size;\
+        (vec).size = (vec_size);\
     }\
-    vec_fill(vec, value)
+    vec_fill(vec, value);\
+} while (0)
 
 #define vec_erase_2(vec, pos1, pos2)\
     vector_erase(vec_attr(vec), data_size(vec), pos1, pos2);
 
 #define vec_erase_1(vec, pos)\
-    vector_erase(vec_attr(vec), data_size(vec), pos, pos + 1);
+    vector_erase(vec_attr(vec), data_size(vec), pos, (pos) + 1);
     
 #define distribute_vec_erase(_1,_2,_3,FUNC,...) FUNC
 #define vec_erase(...) distribute_vec_erase(__VA_ARGS__, vec_erase_2, vec_erase_1)(__VA_ARGS__)
 
 #define vec_clear(vec)\
     vec_erase_2(vec, 0, vec_size(vec));
+
+/*
+** The comma operator is a binary operator that evaluates its first operand and discards the result,
+** it then evaluates the second operand and returns this value.
+*/
+#define vec_foreach(vec, value)\
+    for (unsigned int i = 0; i < vec_size(vec) && (((value) = (vec).data[i]), 1); ++i)
 
 void vector_erase(char **data, unsigned int *size, unsigned int *capacity, unsigned int data_size, unsigned int beg, unsigned int end);
 int vector_expand(char **data, unsigned int *size, unsigned int *capacity, unsigned int data_size, unsigned int expanded_size);
@@ -113,5 +128,6 @@ void vector_insert_make_room(char **data, unsigned int size, unsigned int data_s
 
 
 typedef Vec(char) String;
+typedef Vec(int) VectorInt;
 
 #endif /* end of include guard: VEC_H_ */
