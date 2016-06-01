@@ -105,9 +105,15 @@ do {\
 
 #define vec_erase_1(vec, pos)\
     vector_erase(vec_attr(vec), vec_data_size(vec), pos, (pos) + 1);
-    
-#define distribute_vec_erase(_1,_2,_3,FUNC,...) FUNC
-#define vec_erase(...) distribute_vec_erase(__VA_ARGS__, vec_erase_2, vec_erase_1)(__VA_ARGS__)
+
+/*
+** vec_erase(vec, 0)    -> distribute_vec_erase(vec, 0, vec_erase_2, vec_erase_1, [_NULL]) -> vec_erase_1 
+** vec_erase(vec, 0, 1) -> distribute_vec_erase(vec, 0, 1, vec_erase_2, [vec_erase_1, _NULL]) -> vec_erase_2
+** _NULL is used to suppress the warning about empty variadic macro
+*/
+
+#define distribute_vec_erase(vec,_1,_2,FUNC,...) FUNC
+#define vec_erase(vec, ...) distribute_vec_erase(vec, __VA_ARGS__, vec_erase_2, vec_erase_1, _NULL)(vec, __VA_ARGS__)
 
 #define vec_clear(vec)\
     vec_erase_2(vec, 0, vec_size(vec));
@@ -118,10 +124,18 @@ do {\
 */
 #define vec_foreach(vec, value)\
     for (unsigned int i = 0; i < vec_size(vec) && (((value) = (vec).data[i]), 1); ++i)
-    
+
+#define vec_foreach_it(vec, value, it)\
+    for ((it) = 0; it < vec_size(vec) && (((value) = (vec).data[it]), 1); ++it)
+
 #define vec_sort(vec, compar)\
   qsort(vec_data(vec), vec_size(vec), vec_data_size(vec), compar)
 
+typedef Vec(char) String;
+typedef Vec(short) VectorShort;
+typedef Vec(int) VectorInt;
+typedef Vec(float) VectorFloat;
+typedef Vec(double) VectorDouble;
 
 void vector_erase(char **data, unsigned int *size, unsigned int *capacity, unsigned int data_size, unsigned int beg, unsigned int end);
 int vector_expand(char **data, unsigned int *size, unsigned int *capacity, unsigned int data_size, unsigned int expanded_size);
@@ -129,9 +143,5 @@ int vector_reserve(char **data, unsigned int *capacity, unsigned int data_size, 
 void vector_insert_array(char **data, unsigned int *size, unsigned int data_size,
                          char *array, unsigned int length, unsigned int position);
 void vector_insert_make_room(char **data, unsigned int size, unsigned int data_size, unsigned int position, unsigned int length);
-
-
-typedef Vec(char) String;
-typedef Vec(int) VectorInt;
 
 #endif /* end of include guard: VEC_H_ */

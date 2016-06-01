@@ -109,6 +109,7 @@ void sort_test() {
   printf("--- sort_test ---\n");
   VectorInt intVec;
   int value;
+  unsigned int it;
 
   vec_init(intVec);
   for (unsigned int i = 0; i < 25; ++i)
@@ -118,8 +119,10 @@ void sort_test() {
   }
   vec_sort(intVec, &compare);
   printf("\n");
-  vec_foreach(intVec, value) {
-    printf("%d ", value);
+  vec_foreach_it(intVec, value, it) {
+    printf("%d", value);
+    if (it + 1 != vec_size(intVec))
+     printf(",");
   }
 }
 
