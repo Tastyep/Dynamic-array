@@ -10,6 +10,10 @@ struct {\
     unsigned int size;\
     unsigned int capacity;\
     unsigned int data_size;\
+    union {\
+        T entity;\
+        unsigned char value_bytes[sizeof(T)];\
+    };\
 }
 
 #define vec_attr(vec)\
@@ -131,6 +135,23 @@ do {\
 #define vec_sort(vec, compar)\
   qsort(vec_data(vec), vec_size(vec), vec_data_size(vec), compar)
 
+#define vec_elem_found(it)\
+    ((it) == -1 ? 0 : 1)
+
+#define vec_find_1(vec, value)\
+    ((vec).entity = value,\
+     vector_find_1((char *)vec_data(vec), vec_size(vec), vec_data_size(vec), (vec).value_bytes))
+
+#define vec_find_3(vec, value, beg, end)\
+    ((vec).entity = value,\
+     vector_find_3((char *)vec_data(vec), vec_size(vec), vec_data_size(vec), (vec).value_bytes, beg, end))
+    
+#define _NULL(...) {}
+    
+#define distribute_vec_find(vec,_1,_2,_3,FUNC,...) FUNC
+#define vec_find(vec, ...) distribute_vec_find(vec, __VA_ARGS__, vec_find_3, _NULL, vec_find_1, _NULL)(vec, __VA_ARGS__)
+
+
 typedef Vec(char) String;
 typedef Vec(short) VectorShort;
 typedef Vec(int) VectorInt;
@@ -143,5 +164,7 @@ int vector_reserve(char **data, unsigned int *capacity, unsigned int data_size, 
 void vector_insert_array(char **data, unsigned int *size, unsigned int data_size,
                          char *array, unsigned int length, unsigned int position);
 void vector_insert_make_room(char **data, unsigned int size, unsigned int data_size, unsigned int position, unsigned int length);
+int vector_find_1(char *data, unsigned int size, unsigned int data_size, char* value);
+int vector_find_3(char *data, unsigned int size, unsigned int data_size, char* value, unsigned int beg, unsigned int end);
 
 #endif /* end of include guard: VEC_H_ */

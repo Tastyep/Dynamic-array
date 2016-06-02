@@ -124,6 +124,24 @@ void sort_test() {
     if (it + 1 != vec_size(intVec))
      printf(",");
   }
+  printf("\n\n");
+}
+
+void find_test() {
+  printf("--- find_test ---\n");
+  VectorInt intVec;
+  
+  vec_init(intVec);
+  for (unsigned int i = 0; i < 25; ++i)
+    vec_push_back(intVec, i);
+  printf("0 in vec: %d\n", vec_elem_found(vec_find(intVec, 0)));
+  printf("15 in vec: %d\n", vec_elem_found(vec_find(intVec, 15)));
+  printf("-1 in vec: %d\n", vec_elem_found(vec_find(intVec, -1)));
+  printf("25 in vec: %d\n", vec_elem_found(vec_find(intVec, 25)));
+
+  printf("0 in vec [beg = 5, end = vec_size]: %d\n", vec_elem_found(vec_find(intVec, 0, 5, vec_size(intVec))));
+  printf("10 in vec [beg = 10, end = 11]: %d\n", vec_elem_found(vec_find(intVec, 10, 10, 11)));
+  printf("\n\n");
 }
 
 int main(void) {
@@ -133,5 +151,6 @@ int main(void) {
   erase_test();
   insertion_test();
   sort_test();
+  find_test();
   return 0;
 }
