@@ -74,17 +74,7 @@ void vector_insert_array(char **data, unsigned int *size, unsigned int data_size
  *size += length;
 }
 
-int vector_find_1(char *data, unsigned int size, unsigned int data_size, char* value) {
- unsigned int i;
- 
- for (i = 0; i < size; ++i) {
-  if (memcmp(&data[i * data_size], value, data_size) == 0)
-   return i;
- }
- return -1;
-}
-
-int vector_find_3(char *data, unsigned int size, unsigned int data_size, char* value, unsigned int beg, unsigned int end) {
+int vector_find(char *data, unsigned int size, unsigned int data_size, char* value, unsigned int beg, unsigned int end) {
  unsigned int i;
  
  for (i = beg; i < end; ++i) {

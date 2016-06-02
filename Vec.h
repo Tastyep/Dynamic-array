@@ -140,11 +140,11 @@ do {\
 
 #define vec_find_1(vec, value)\
     ((vec).entity = value,\
-     vector_find_1((char *)vec_data(vec), vec_size(vec), vec_data_size(vec), (vec).value_bytes))
+     vector_find((char *)vec_data(vec), vec_size(vec), vec_data_size(vec), (vec).value_bytes, 0, vec_size(vec)))
 
 #define vec_find_3(vec, value, beg, end)\
     ((vec).entity = value,\
-     vector_find_3((char *)vec_data(vec), vec_size(vec), vec_data_size(vec), (vec).value_bytes, beg, end))
+     vector_find((char *)vec_data(vec), vec_size(vec), vec_data_size(vec), (vec).value_bytes, beg, end))
     
 #define _NULL(...) {}
     
@@ -164,7 +164,6 @@ int vector_reserve(char **data, unsigned int *capacity, unsigned int data_size, 
 void vector_insert_array(char **data, unsigned int *size, unsigned int data_size,
                          char *array, unsigned int length, unsigned int position);
 void vector_insert_make_room(char **data, unsigned int size, unsigned int data_size, unsigned int position, unsigned int length);
-int vector_find_1(char *data, unsigned int size, unsigned int data_size, char* value);
-int vector_find_3(char *data, unsigned int size, unsigned int data_size, char* value, unsigned int beg, unsigned int end);
+int vector_find(char *data, unsigned int size, unsigned int data_size, char* value, unsigned int beg, unsigned int end);
 
 #endif /* end of include guard: VEC_H_ */
