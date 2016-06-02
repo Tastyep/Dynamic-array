@@ -144,6 +144,21 @@ void find_test() {
   printf("\n\n");
 }
 
+void count_test() {
+  printf("--- count_test ---\n");
+  VectorInt intVec;
+  
+  vec_init(intVec);
+  for (unsigned int i = 0; i < 25; ++i) {
+    printf("%d ", i % 4);
+    vec_push_back(intVec, i % 4);
+  }
+  printf("\n");
+  printf("0 appears %d times\n", vec_count(intVec, 0));
+  printf("3 appears %d times\n", vec_count(intVec, 3));
+  printf("\n\n");
+}
+
 int main(void) {
   basic_test();
   capacity_test();
@@ -152,5 +167,6 @@ int main(void) {
   insertion_test();
   sort_test();
   find_test();
+  count_test();
   return 0;
 }

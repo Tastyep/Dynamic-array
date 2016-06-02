@@ -135,6 +135,8 @@ do {\
 #define vec_sort(vec, compar)\
   qsort(vec_data(vec), vec_size(vec), vec_data_size(vec), compar)
 
+#define _NULL(...) {}
+
 #define vec_elem_found(it)\
     ((it) == -1 ? 0 : 1)
 
@@ -146,10 +148,19 @@ do {\
     ((vec).entity = value,\
      vector_find((char *)vec_data(vec), vec_size(vec), vec_data_size(vec), (vec).value_bytes, beg, end))
     
-#define _NULL(...) {}
-    
 #define distribute_vec_find(vec,_1,_2,_3,FUNC,...) FUNC
 #define vec_find(vec, ...) distribute_vec_find(vec, __VA_ARGS__, vec_find_3, _NULL, vec_find_1, _NULL)(vec, __VA_ARGS__)
+
+#define vec_count_1(vec, value)\
+    ((vec).entity = value,\
+     vector_count((char *)vec_data(vec), vec_size(vec), vec_data_size(vec), (vec).value_bytes, 0, vec_size(vec)))
+
+#define vec_count_3(vec, value, beg, end)\
+    ((vec).entity = value,\
+     vector_count((char *)vec_data(vec), vec_size(vec), vec_data_size(vec), (vec).value_bytes, beg, end))
+    
+#define distribute_vec_count(vec,_1,_2,_3,FUNC,...) FUNC
+#define vec_count(vec, ...) distribute_vec_count(vec, __VA_ARGS__, vec_count_3, _NULL, vec_count_1, _NULL)(vec, __VA_ARGS__)
 
 
 typedef Vec(char) String;
@@ -165,5 +176,6 @@ void vector_insert_array(char **data, unsigned int *size, unsigned int data_size
                          char *array, unsigned int length, unsigned int position);
 void vector_insert_make_room(char **data, unsigned int size, unsigned int data_size, unsigned int position, unsigned int length);
 int vector_find(char *data, unsigned int size, unsigned int data_size, char* value, unsigned int beg, unsigned int end);
+int vector_count(char *data, unsigned int size, unsigned int data_size, char* value, unsigned int beg, unsigned int end);
 
 #endif /* end of include guard: VEC_H_ */

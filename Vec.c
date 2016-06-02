@@ -84,3 +84,14 @@ int vector_find(char *data, unsigned int size, unsigned int data_size, char* val
  return -1;
 }
 
+int vector_count(char *data, unsigned int size, unsigned int data_size, char* value, unsigned int beg, unsigned int end) {
+ unsigned int count = 0;
+ unsigned int i;
+ 
+ for (i = beg; i < end; ++i) {
+  if (memcmp(&data[i * data_size], value, data_size) == 0)
+   ++count;
+ }
+ return count;
+}
+
