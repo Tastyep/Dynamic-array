@@ -137,10 +137,6 @@ do {\
 #define vec_foreach_it(vec, value, it)\
     for ((it) = 0; it < vec_size(vec) && (((value) = (vec).data[it]), 1); ++it)
 
-#define vec_sort(vec, compar)\
-  qsort(vec_data(vec), vec_size(vec), vec_data_size(vec), compar)
-
-
 typedef Vec(char) String;
 typedef Vec(short) VectorShort;
 typedef Vec(int) VectorInt;
