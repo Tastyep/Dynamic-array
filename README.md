@@ -24,7 +24,7 @@ For convenience the following types are already declared:
   VectorInt vec;
   
   // Other variables used for this test
-  int tab[] = {9,8,7,6,5,4,3,2,1,0};
+  int tab[] = {5,4,3,2,1,0};
   int find_pos;
   int value;
   
@@ -32,14 +32,14 @@ For convenience the following types are already declared:
   vec_init(vec);
 
   // Push some values
-  for (unsigned int i = 0; i < 25; ++i)
+  for (unsigned int i = 0; i < 10; ++i)
     vec_push_back(vec, i);
 
-  // find the position of the value 10 in vec (-1 if not found)
-  find_pos = vec_find(vec, 10);
+  // find the position of the value 6 in vec (-1 if not found)
+  find_pos = vec_find(vec, 6);
   
-  // insert the tab at the position 10 (position of 10 + 1)
-  vec_insert_array(vec, find_pos + 1, tab, sizeof(tab) / sizeof(*tab));
+  // insert the tab at the position of 6
+  vec_insert_array(vec, find_pos, tab, sizeof(tab) / sizeof(*tab));
 
   // insert the value -1 at the beginning of vec
   vec_insert(vec, 0, -1);
@@ -51,8 +51,6 @@ For convenience the following types are already declared:
   vec_foreach(vec, value)
     printf("%d ", value);
   printf("\n");
-  
-  //prints: -1 0 1 2 3 4 5 6 7 8 9 10 9 8 7 6 5 4 3 2 1 0 11 12 13 14 15 16 17 18 19 20 21 22 23
   
   // Delete the vector and free its memory
   vec_delete(vec);
