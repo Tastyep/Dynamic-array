@@ -40,8 +40,7 @@
 */
 
 #define vec_count_1(vec, value)\
-    ((vec).buffer_value = value,\
-     vector_count((char *)vec_data(vec), vec_data_size(vec), (vec).value_bytes, 0, vec_size(vec)))
+    vec_count_3(vec, value, 0, vec_size(vec))
 
 #define vec_count_3(vec, value, beg, end)\
     ((vec).buffer_value = value,\
@@ -71,6 +70,20 @@
 
 #define vec_sort(vec, compar)\
   qsort(vec_data(vec), vec_size(vec), vec_data_size(vec), compar)
+
+/*
+** vec_for_each(vec, value [beg, end])
+*/
+
+#define vec_for_each_1(vec, function)\
+  vec_for_each_3(vec, function, 0, vec_size(vec))
+
+#define vec_for_each_3(vec, function, beg, end)\
+    for (unsigned int i = beg; i < end; ++i)\
+        function(&(vec).data[i])
+  
+#define distribute_vec_for_each(vec,_1,_2,_3,FUNC,...) FUNC
+#define vec_for_each(vec, ...) distribute_vec_for_each(vec, __VA_ARGS__, vec_for_each_3, _NULL, vec_for_each_1, _NULL)(vec, __VA_ARGS__)
 
 int vector_find(char *data, unsigned int data_size, unsigned char* value, unsigned int beg, unsigned int end);
 int vector_find_if(char *data, unsigned int data_size, int (*cond_function)(const void *a), unsigned int beg, unsigned int end);

@@ -224,10 +224,34 @@ void readme_test() {
   // Iterate over vec and print its content
   vec_foreach(vec, value)
     printf("%d ", value);
-  printf("\n");
   
   // Delete the vector and free its memory
   vec_delete(vec);
+  printf("\n\n");
+}
+
+void square_num(void *i) {
+ int *value = i;
+ 
+ (*value) *= (*value); 
+}
+
+void for_each_test() {
+  printf("--- for_each_test ---\n");
+  VectorInt intVec;
+  int value;
+
+  vec_init(intVec);
+  for (unsigned int i = 0; i < 10; ++i)
+    vec_push_back(intVec, i);
+  vec_foreach(intVec, value)
+    printf("%2d ", value);
+  printf("\n");
+  vec_for_each(intVec, square_num);
+  vec_foreach(intVec, value)
+    printf("%2d ", value);
+  printf("\n\n");
+  vec_delete(intVec);
 }
 
 int main(void) {
@@ -240,5 +264,6 @@ int main(void) {
   find_test();
   count_test();
   readme_test();
+  for_each_test();
   return 0;
 }
