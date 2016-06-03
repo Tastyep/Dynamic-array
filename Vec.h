@@ -46,7 +46,7 @@ do {\
     ++(vec).size;\
 } while (0)
 
-#define vec_insert(vec, position, value)\
+#define vec_insert(vec, value, position)\
 do {\
     vector_expand(vec_attr(vec), vec_data_size(vec), 1);\
     vector_insert_make_room((char **)(&(vec).data), vec_size(vec), vec_data_size(vec), 1, position);\
@@ -54,21 +54,21 @@ do {\
     ++(vec).size;\
 } while (0)
 
-#define vec_insert_array(vec, position, array, length)\
+#define vec_insert_array(vec, array, length, position)\
 do {\
     vector_expand(vec_attr(vec), vec_data_size(vec), length);\
     vector_insert_array((char **)(&(vec).data), &vec_size(vec), vec_data_size(vec), (char *)array, length, position);\
 } while (0)
 
-#define vec_insert_string(vec, position, string)\
+#define vec_insert_string(vec, string, position)\
 do {\
-    vec_insert_array(vec, position, string, strlen(string));\
+    vec_insert_array(vec, string, strlen(string), position);\
     if (vec_size(vec) > 0 && (vec).data[vec_size(vec) - 1] != '\0')\
         vec_push_back(vec, '\0');\
 } while (0)
 
-#define vec_insert_vec(vec_dest, position, vec_src)\
-    vec_insert_array(vec_dest, position, (vec_src).data, (vec_src).size)
+#define vec_insert_vec(vec_dest, vec_src, position)\
+    vec_insert_array(vec_dest, (vec_src).data, (vec_src).size, position)
 
 #define vec_pop_back(vec)\
     --(vec).size

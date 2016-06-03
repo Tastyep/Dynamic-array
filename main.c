@@ -84,12 +84,12 @@ void insertion_test() {
   vec_init(appendVec);
   vec_init(str);
 
-  vec_insert_array(appendVec, 0, tab, sizeof(tab) / sizeof(*tab));
+  vec_insert_array(appendVec, tab, sizeof(tab) / sizeof(*tab), 0);
   for (unsigned int i = 0; i < 15; ++i)
     vec_push_back(intVec, i);
-  vec_insert(intVec, 0, 100);
-  vec_insert(intVec, 10, 100);
-  vec_insert_vec(intVec, 0, appendVec);
+  vec_insert(intVec, 100, 0);
+  vec_insert(intVec, 100, 10);
+  vec_insert_vec(appendVec, intVec, 0);
   printf("Capacity: %u, Size: %u\n", vec_capacity(intVec), vec_size(intVec));
   for (unsigned int i = 0; i < vec_size(intVec); ++i) {
     printf("%d", vec_at(intVec, i));
@@ -97,8 +97,8 @@ void insertion_test() {
       printf(",");
   }
   printf("\n");
-  vec_insert_string(str, 0, "Hello World !");
-  vec_insert_string(str, 6, "Beautiful ");
+  vec_insert_string(str, "Hello World !", 0);
+  vec_insert_string(str, "Beautiful ", 6);
   printf("str: [%s]\n", vec_data(str));
   printf("\n");
   vec_delete(intVec);
@@ -213,7 +213,7 @@ void readme_test() {
   find_pos = vec_find(vec, 6);
   
   // insert the tab at the position of 6
-  vec_insert_array(vec, find_pos, tab, sizeof(tab) / sizeof(*tab));
+  vec_insert_array(vec, tab, sizeof(tab) / sizeof(*tab), find_pos);
 
   // insert the value -1 at the beginning of vec
   vec_insert(vec, 0, -1);
