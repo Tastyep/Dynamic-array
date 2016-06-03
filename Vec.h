@@ -148,6 +148,6 @@ int vector_expand(char **data, unsigned int *size, unsigned int *capacity, unsig
 int vector_reserve(char **data, unsigned int *capacity, unsigned int data_size, unsigned int new_capacity);
 void vector_insert_array(char **data, unsigned int *size, unsigned int data_size,
                          char *array, unsigned int length, unsigned int position);
-void vector_insert_make_room(char **data, unsigned int size, unsigned int data_size, unsigned int position, unsigned int length);
+void vector_insert_make_room(char **data, unsigned int size, unsigned int data_size, unsigned int length, unsigned int position);
 
 #endif /* end of include guard: VEC_H_ */

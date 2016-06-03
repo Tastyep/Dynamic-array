@@ -59,7 +59,7 @@ void vector_erase(char **data, unsigned int *size, unsigned int *capacity,
   *size -= block_size;
 }
 
-void vector_insert_make_room(char **data, unsigned int size, unsigned int data_size, unsigned int position, unsigned int length) {
+void vector_insert_make_room(char **data, unsigned int size, unsigned int data_size, unsigned int length, unsigned int position) {
  if (position < size)
  {
      memmove(*data + (position + length) * data_size,
@@ -70,7 +70,7 @@ void vector_insert_make_room(char **data, unsigned int size, unsigned int data_s
 
 void vector_insert_array(char **data, unsigned int *size, unsigned int data_size,
                          char *array, unsigned int length, unsigned int position) {
- vector_insert_make_room(data, *size, data_size, position, length);
+ vector_insert_make_room(data, *size, data_size, length, position);
  memcpy(*data + position * data_size, array, length * data_size);
  *size += length;
 }
