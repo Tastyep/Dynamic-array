@@ -13,11 +13,11 @@
 */
 
 #define vec_find_1(vec, value)\
-    ((vec).entity = value,\
+    ((vec).buffer_value = value,\
      vector_find((char *)vec_data(vec), vec_data_size(vec), (vec).value_bytes, 0, vec_size(vec)))
 
 #define vec_find_3(vec, value, beg, end)\
-    ((vec).entity = value,\
+    ((vec).buffer_value = value,\
      vector_find((char *)vec_data(vec), vec_data_size(vec), (vec).value_bytes, beg, end))
     
 #define distribute_vec_find(vec,_1,_2,_3,FUNC,...) FUNC
@@ -29,11 +29,11 @@
 */
 
 #define vec_count_1(vec, value)\
-    ((vec).entity = value,\
+    ((vec).buffer_value = value,\
      vector_count((char *)vec_data(vec), vec_data_size(vec), (vec).value_bytes, 0, vec_size(vec)))
 
 #define vec_count_3(vec, value, beg, end)\
-    ((vec).entity = value,\
+    ((vec).buffer_value = value,\
      vector_count((char *)vec_data(vec), vec_data_size(vec), (vec).value_bytes, beg, end))
     
 #define distribute_vec_count(vec,_1,_2,_3,FUNC,...) FUNC

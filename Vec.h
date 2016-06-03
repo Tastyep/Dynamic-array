@@ -11,7 +11,7 @@ struct {\
     unsigned int capacity;\
     unsigned int data_size;\
     union {\
-        T entity;\
+        T buffer_value;\
         unsigned char value_bytes[sizeof(T)];\
     };\
 }
