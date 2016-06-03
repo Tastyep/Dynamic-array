@@ -136,7 +136,7 @@ void sort_test() {
 }
 
 int is_odd(const void* i) {
-  int v = *(int *)i;
+  int v = *(const int *)i;
   
   return ((v % 2) == 1);
 }
@@ -167,7 +167,7 @@ void find_test() {
 
   printf("\n-- find_if:\n");
   printf("[10,25,40,55] The first odd value is %d\n", vec_at(intVec, vec_find_if(intVec, is_odd)));
-  printf("[10,25,40,55][begin = 40] The first odd value is %d\n", vec_at(intVec, vec_find_if(intVec, is_odd, 2, vec_size(intVec))));
+  printf("[10,25,40,55][begin = 2] The first odd value is %d\n", vec_at(intVec, vec_find_if(intVec, is_odd, 2, vec_size(intVec))));
   printf("\n\n");
   vec_delete(intVec);
 }
@@ -177,13 +177,17 @@ void count_test() {
   VectorInt intVec;
   
   vec_init(intVec);
-  for (unsigned int i = 0; i < 25; ++i) {
+  for (unsigned int i = 0; i < 10; ++i) {
     printf("%d ", i % 4);
     vec_push_back(intVec, i % 4);
   }
-  printf("\n");
+  printf("\n-- count:\n");
   printf("0 appears %d times\n", vec_count(intVec, 0));
   printf("3 appears %d times\n", vec_count(intVec, 3));
+  
+  printf("\n-- count_if:\n");
+  printf("Number of odd values: %d\n", vec_count_if(intVec, is_odd));
+  printf("[begin = 2, end = 5] Number of odd values: %d\n", vec_find_if(intVec, is_odd, 2, 5));
   printf("\n\n");
   vec_delete(intVec);
 }
@@ -194,7 +198,7 @@ void readme_test() {
   VectorInt vec;
   
   // Other variables used for this test
-  int tab[] = {9,8,7,6,5,4,3,2,1,0};
+  int tab[] = {5,4,3,2,1,0};
   int find_pos;
   int value;
   
@@ -202,14 +206,14 @@ void readme_test() {
   vec_init(vec);
 
   // Push some values
-  for (unsigned int i = 0; i < 25; ++i)
+  for (unsigned int i = 0; i < 10; ++i)
     vec_push_back(vec, i);
 
-  // find the position of the value 10 in vec (-1 if not found)
-  find_pos = vec_find(vec, 10);
+  // find the position of the value 6 in vec (-1 if not found)
+  find_pos = vec_find(vec, 6);
   
-  // insert the tab at the position 10 (position of 10 + 1)
-  vec_insert_array(vec, find_pos + 1, tab, sizeof(tab) / sizeof(*tab));
+  // insert the tab at the position of 6
+  vec_insert_array(vec, find_pos, tab, sizeof(tab) / sizeof(*tab));
 
   // insert the value -1 at the beginning of vec
   vec_insert(vec, 0, -1);

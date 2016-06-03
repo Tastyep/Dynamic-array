@@ -97,12 +97,20 @@ int vector_find_if(char *data, unsigned int data_size, int (*cond_function)(cons
 
 int vector_count(char *data, unsigned int data_size, unsigned char* value, unsigned int beg, unsigned int end) {
  unsigned int count = 0;
- unsigned int i;
  
- for (i = beg; i < end; ++i) {
+ for (unsigned int i = beg; i < end; ++i) {
   if (memcmp(&data[i * data_size], value, data_size) == 0)
    ++count;
  }
  return count;
 }
 
+int vector_count_if(char *data, unsigned int data_size, int (*cond_function)(const void *a), unsigned int beg, unsigned int end) {
+ unsigned int count = 0;
+ 
+ for (unsigned int i = beg; i < end; ++i) {
+  if (cond_function(&data[i * data_size]))
+   ++count;
+ }
+ return count;
+}
