@@ -125,6 +125,9 @@ do {\
 
 #define vec_clear(vec)\
     vec_erase_2(vec, 0, vec_size(vec));
+    
+#define vec_delete(vec)\
+    vector_delete(vec_attr(vec))
 
 /*
 ** The comma operator is a binary operator that evaluates its first operand and discards the result,
@@ -143,6 +146,7 @@ typedef Vec(int) VectorInt;
 typedef Vec(float) VectorFloat;
 typedef Vec(double) VectorDouble;
 
+void vector_delete(char **data, unsigned int *size, unsigned int *capacity);
 void vector_erase(char **data, unsigned int *size, unsigned int *capacity, unsigned int data_size, unsigned int beg, unsigned int end);
 int vector_expand(char **data, unsigned int *size, unsigned int *capacity, unsigned int data_size, unsigned int expanded_size);
 int vector_reserve(char **data, unsigned int *capacity, unsigned int data_size, unsigned int new_capacity);

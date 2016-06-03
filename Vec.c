@@ -41,15 +41,19 @@ int vector_reserve(char **data, unsigned int *capacity, unsigned int data_size,
   return 0;
 }
 
+void vector_delete(char **data, unsigned int *size, unsigned int *capacity) {
+  free(*data);
+  *data = NULL;
+  *size = 0;
+  *capacity = 0;
+}
+
 void vector_erase(char **data, unsigned int *size, unsigned int *capacity,
                   unsigned int data_size, unsigned int beg, unsigned int end) {
   unsigned int block_size = end - beg;
 
   if (block_size >= *size) {
-    free(*data);
-    *data = NULL;
-    *size = 0;
-    *capacity = 0;
+    vector_delete(data, size, capacity);
     return;
   }
   if (end < *size) {

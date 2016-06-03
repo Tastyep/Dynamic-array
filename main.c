@@ -18,6 +18,7 @@ void basic_test() {
       printf(",");
   }
   printf("\n\n");
+  vec_delete(intVec);
 }
 
 void capacity_test() {
@@ -30,6 +31,7 @@ void capacity_test() {
 
   vec_fill(intVec, 1);
   printf("Capacity: %u, Size: %u\n\n", vec_capacity(intVec), vec_size(intVec));
+  vec_delete(intVec);
 }
 
 void resize_test() {
@@ -43,6 +45,7 @@ void resize_test() {
   printf("Capacity: %u, Size: %u\n", vec_capacity(intVec), vec_size(intVec));
   vec_foreach(intVec, value) { printf("%d ", value); }
   printf("\n\n");
+  vec_delete(intVec);
 }
 
 void erase_test() {
@@ -67,6 +70,7 @@ void erase_test() {
   vec_clear(intVec);
   printf("Capacity: %u, Size: %u\n", vec_capacity(intVec), vec_size(intVec));
   printf("\n\n");
+  vec_delete(intVec);
 }
 
 void insertion_test() {
@@ -97,6 +101,8 @@ void insertion_test() {
   vec_insert_string(str, 6, "Beautiful ");
   printf("str: [%s]\n", vec_data(str));
   printf("\n");
+  vec_delete(intVec);
+  vec_delete(appendVec);
 }
 
 int compare(const void *a, const void *b) {
@@ -126,6 +132,7 @@ void sort_test() {
      printf(",");
   }
   printf("\n\n");
+  vec_delete(intVec);
 }
 
 void find_test() {
@@ -143,6 +150,7 @@ void find_test() {
   printf("0 in vec [beg = 5, end = vec_size]: %d\n", vec_elem_found(vec_find(intVec, 0, 5, vec_size(intVec))));
   printf("10 in vec [beg = 10, end = 11]: %d\n", vec_elem_found(vec_find(intVec, 10, 10, 11)));
   printf("\n\n");
+  vec_delete(intVec);
 }
 
 void count_test() {
@@ -158,6 +166,7 @@ void count_test() {
   printf("0 appears %d times\n", vec_count(intVec, 0));
   printf("3 appears %d times\n", vec_count(intVec, 3));
   printf("\n\n");
+  vec_delete(intVec);
 }
 
 void readme_test() {
@@ -195,7 +204,7 @@ void readme_test() {
   printf("\n");
   
   // Delete the vector and free its memory
-  // vec_delete(vec);
+  vec_delete(vec);
 }
 
 int main(void) {
