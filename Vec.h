@@ -36,6 +36,8 @@ do {\
     (vec).data = NULL; (vec).size = 0; (vec).capacity = 0; (vec).data_size = sizeof(*((vec).data));\
 } while(0)
 
+#define vec_empty(vec)\
+    ((vec).size == 0)
 
 #define vec_push_back(vec, value)\
 do {\
@@ -80,9 +82,6 @@ do {\
 #define vec_at(vec, idx)\
     (vec).data[idx]
     
-#define vec_empty(vec)\
-    ((vec).size == 0)
-
 #define vec_fill(vec, value)\
 do {\
     if (sizeof((vec).data) == 1)\
@@ -104,6 +103,11 @@ do {\
     vec_fill(vec, value);\
 } while (0)
 
+/*
+** vec_erase(vec, position, [end])
+** if end is specified position = begin
+*/
+
 #define vec_erase_2(vec, pos1, pos2)\
     vector_erase(vec_attr(vec), vec_data_size(vec), pos1, pos2);
 
@@ -111,13 +115,13 @@ do {\
     vector_erase(vec_attr(vec), vec_data_size(vec), pos, (pos) + 1);
 
 /*
-** vec_erase(vec, 0)    -> distribute_vec_erase(vec, 0, vec_erase_2, vec_erase_1, [_NULL]) -> vec_erase_1 
-** vec_erase(vec, 0, 1) -> distribute_vec_erase(vec, 0, 1, vec_erase_2, [vec_erase_1, _NULL]) -> vec_erase_2
-** _NULL is used to suppress the warning about empty variadic macro
+** vec_erase(vec, 0)    -> distribute_vec_erase(vec, 0, vec_erase_2, vec_erase_1, [NULL]) -> vec_erase_1 
+** vec_erase(vec, 0, 1) -> distribute_vec_erase(vec, 0, 1, vec_erase_2, [vec_erase_1, NULL]) -> vec_erase_2
+** NULL is used to suppress the warning about empty variadic macro
 */
 
 #define distribute_vec_erase(vec,_1,_2,FUNC,...) FUNC
-#define vec_erase(vec, ...) distribute_vec_erase(vec, __VA_ARGS__, vec_erase_2, vec_erase_1, _NULL)(vec, __VA_ARGS__)
+#define vec_erase(vec, ...) distribute_vec_erase(vec, __VA_ARGS__, vec_erase_2, vec_erase_1, NULL)(vec, __VA_ARGS__)
 
 #define vec_clear(vec)\
     vec_erase_2(vec, 0, vec_size(vec));
@@ -126,6 +130,7 @@ do {\
 ** The comma operator is a binary operator that evaluates its first operand and discards the result,
 ** it then evaluates the second operand and returns this value.
 */
+
 #define vec_foreach(vec, value)\
     for (unsigned int i = 0; i < vec_size(vec) && (((value) = (vec).data[i]), 1); ++i)
 
@@ -134,33 +139,6 @@ do {\
 
 #define vec_sort(vec, compar)\
   qsort(vec_data(vec), vec_size(vec), vec_data_size(vec), compar)
-
-#define _NULL(...) {}
-
-#define vec_elem_found(it)\
-    ((it) == -1 ? 0 : 1)
-
-#define vec_find_1(vec, value)\
-    ((vec).entity = value,\
-     vector_find((char *)vec_data(vec), vec_size(vec), vec_data_size(vec), (vec).value_bytes, 0, vec_size(vec)))
-
-#define vec_find_3(vec, value, beg, end)\
-    ((vec).entity = value,\
-     vector_find((char *)vec_data(vec), vec_size(vec), vec_data_size(vec), (vec).value_bytes, beg, end))
-    
-#define distribute_vec_find(vec,_1,_2,_3,FUNC,...) FUNC
-#define vec_find(vec, ...) distribute_vec_find(vec, __VA_ARGS__, vec_find_3, _NULL, vec_find_1, _NULL)(vec, __VA_ARGS__)
-
-#define vec_count_1(vec, value)\
-    ((vec).entity = value,\
-     vector_count((char *)vec_data(vec), vec_size(vec), vec_data_size(vec), (vec).value_bytes, 0, vec_size(vec)))
-
-#define vec_count_3(vec, value, beg, end)\
-    ((vec).entity = value,\
-     vector_count((char *)vec_data(vec), vec_size(vec), vec_data_size(vec), (vec).value_bytes, beg, end))
-    
-#define distribute_vec_count(vec,_1,_2,_3,FUNC,...) FUNC
-#define vec_count(vec, ...) distribute_vec_count(vec, __VA_ARGS__, vec_count_3, _NULL, vec_count_1, _NULL)(vec, __VA_ARGS__)
 
 
 typedef Vec(char) String;
@@ -175,7 +153,5 @@ int vector_reserve(char **data, unsigned int *capacity, unsigned int data_size, 
 void vector_insert_array(char **data, unsigned int *size, unsigned int data_size,
                          char *array, unsigned int length, unsigned int position);
 void vector_insert_make_room(char **data, unsigned int size, unsigned int data_size, unsigned int position, unsigned int length);
-int vector_find(char *data, unsigned int size, unsigned int data_size, char* value, unsigned int beg, unsigned int end);
-int vector_count(char *data, unsigned int size, unsigned int data_size, char* value, unsigned int beg, unsigned int end);
 
 #endif /* end of include guard: VEC_H_ */

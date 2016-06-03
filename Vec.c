@@ -1,4 +1,5 @@
-#include "Vec.h"
+#include <stdlib.h>
+#include <string.h>
 
 static unsigned int round_next_p_two(unsigned int n) {
   n--;
@@ -74,7 +75,7 @@ void vector_insert_array(char **data, unsigned int *size, unsigned int data_size
  *size += length;
 }
 
-int vector_find(char *data, unsigned int size, unsigned int data_size, char* value, unsigned int beg, unsigned int end) {
+int vector_find(char *data, unsigned int data_size, unsigned char* value, unsigned int beg, unsigned int end) {
  unsigned int i;
  
  for (i = beg; i < end; ++i) {
@@ -84,7 +85,7 @@ int vector_find(char *data, unsigned int size, unsigned int data_size, char* val
  return -1;
 }
 
-int vector_count(char *data, unsigned int size, unsigned int data_size, char* value, unsigned int beg, unsigned int end) {
+int vector_count(char *data, unsigned int data_size, unsigned char* value, unsigned int beg, unsigned int end) {
  unsigned int count = 0;
  unsigned int i;
  

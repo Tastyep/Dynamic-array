@@ -1,4 +1,5 @@
 #include "Vec.h"
+#include "Vec_algorithm.h"
 #include <stdio.h>
 
 void basic_test() {
