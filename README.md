@@ -39,7 +39,7 @@ For convenience the following types are already declared:
   find_pos = vec_find(vec, 6);
   
   // insert the tab at the position of 6
-  vec_insert_array(vec, find_pos, tab, sizeof(tab) / sizeof(*tab));
+  vec_insert_array(vec, tab, sizeof(tab) / sizeof(*tab), find_pos);
 
   // insert the value -1 at the beginning of vec
   vec_insert(vec, 0, -1);
