@@ -80,10 +80,16 @@ void vector_insert_array(char **data, unsigned int *size, unsigned int data_size
 }
 
 int vector_find(char *data, unsigned int data_size, unsigned char* value, unsigned int beg, unsigned int end) {
- unsigned int i;
- 
- for (i = beg; i < end; ++i) {
+ for (unsigned int i = beg; i < end; ++i) {
   if (memcmp(&data[i * data_size], value, data_size) == 0)
+   return i;
+ }
+ return -1;
+}
+
+int vector_find_if(char *data, unsigned int data_size, int (*cond_function)(const void *a), unsigned int beg, unsigned int end) {
+ for (unsigned int i = beg; i < end; ++i) {
+  if (cond_function(&data[i * data_size]))
    return i;
  }
  return -1;

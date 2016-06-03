@@ -135,20 +135,39 @@ void sort_test() {
   vec_delete(intVec);
 }
 
+int is_odd(const void* i) {
+  int v = *(int *)i;
+  
+  return ((v % 2) == 1);
+}
+
 void find_test() {
   printf("--- find_test ---\n");
   VectorInt intVec;
   
   vec_init(intVec);
-  for (unsigned int i = 0; i < 25; ++i)
+  for (unsigned int i = 0; i < 10; ++i) {
     vec_push_back(intVec, i);
-  printf("0 in vec: %d\n", vec_elem_found(vec_find(intVec, 0)));
-  printf("15 in vec: %d\n", vec_elem_found(vec_find(intVec, 15)));
-  printf("-1 in vec: %d\n", vec_elem_found(vec_find(intVec, -1)));
-  printf("25 in vec: %d\n", vec_elem_found(vec_find(intVec, 25)));
+    printf("%d ", i);
+  }
+  printf("\n-- find:\n");
+  printf("Is 0 in vec: %d\n", vec_elem_found(vec_find(intVec, 0)));
+  printf("Is 9 in vec: %d\n", vec_elem_found(vec_find(intVec, 9)));
+  printf("Is -1 in vec: %d\n", vec_elem_found(vec_find(intVec, -1)));
+  printf("Is 10 in vec: %d\n", vec_elem_found(vec_find(intVec, 10)));
 
-  printf("0 in vec [beg = 5, end = vec_size]: %d\n", vec_elem_found(vec_find(intVec, 0, 5, vec_size(intVec))));
-  printf("10 in vec [beg = 10, end = 11]: %d\n", vec_elem_found(vec_find(intVec, 10, 10, 11)));
+  printf("Is 0 in vec [beg = 5, end = vec_size]: %d\n", vec_elem_found(vec_find(intVec, 0, 5, vec_size(intVec))));
+  printf("Is 5 in vec [beg = 3, end = 8]: %d\n", vec_elem_found(vec_find(intVec, 5, 3, 8)));
+
+  vec_clear(intVec);
+  vec_push_back(intVec, 10);
+  vec_push_back(intVec, 25);
+  vec_push_back(intVec, 40);
+  vec_push_back(intVec, 55);
+
+  printf("\n-- find_if:\n");
+  printf("[10,25,40,55] The first odd value is %d\n", vec_at(intVec, vec_find_if(intVec, is_odd)));
+  printf("[10,25,40,55][begin = 40] The first odd value is %d\n", vec_at(intVec, vec_find_if(intVec, is_odd, 2, vec_size(intVec))));
   printf("\n\n");
   vec_delete(intVec);
 }
