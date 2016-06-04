@@ -216,7 +216,7 @@ void readme_test() {
   vec_insert_array(vec, tab, sizeof(tab) / sizeof(*tab), find_pos);
 
   // insert the value -1 at the beginning of vec
-  vec_insert(vec, 0, -1);
+  vec_insert(vec, -1, 0);
   
   // delete the last value
   vec_erase(vec, vec_size(vec) - 1);
