@@ -109,7 +109,7 @@ void insertion_test() {
 int compare(const void *a, const void *b) {
   const int *a1 = a;
   const int *b1 = b;
-  
+
   return *a1 > *b1;
 }
 
@@ -122,30 +122,28 @@ void sort_test() {
   vec_init(intVec);
   for (unsigned int i = 0; i < 25; ++i)
     vec_push_back(intVec, 25 - i);
-  vec_foreach(intVec, value) {
-    printf("%d ", value);
-  }
+  vec_foreach(intVec, value) { printf("%d ", value); }
   vec_sort(intVec, &compare);
   printf("\n");
   vec_foreach_it(intVec, value, it) {
     printf("%d", value);
     if (it + 1 != vec_size(intVec))
-     printf(",");
+      printf(",");
   }
   printf("\n\n");
   vec_delete(intVec);
 }
 
-int is_odd(const void* i) {
+int is_odd(const void *i) {
   int v = *(const int *)i;
-  
+
   return ((v % 2) == 1);
 }
 
 void find_test() {
   printf("--- find_test ---\n");
   VectorInt intVec;
-  
+
   vec_init(intVec);
   for (unsigned int i = 0; i < 10; ++i) {
     vec_push_back(intVec, i);
@@ -157,8 +155,10 @@ void find_test() {
   printf("Is -1 in vec: %d\n", vec_elem_found(vec_find(intVec, -1)));
   printf("Is 10 in vec: %d\n", vec_elem_found(vec_find(intVec, 10)));
 
-  printf("Is 0 in vec [beg = 5, end = vec_size]: %d\n", vec_elem_found(vec_find(intVec, 0, 5, vec_size(intVec))));
-  printf("Is 5 in vec [beg = 3, end = 8]: %d\n", vec_elem_found(vec_find(intVec, 5, 3, 8)));
+  printf("Is 0 in vec [beg = 5, end = vec_size]: %d\n",
+         vec_elem_found(vec_find(intVec, 0, 5, vec_size(intVec))));
+  printf("Is 5 in vec [beg = 3, end = 8]: %d\n",
+         vec_elem_found(vec_find(intVec, 5, 3, 8)));
 
   vec_clear(intVec);
   vec_push_back(intVec, 10);
@@ -167,8 +167,10 @@ void find_test() {
   vec_push_back(intVec, 55);
 
   printf("\n-- find_if:\n");
-  printf("[10,25,40,55] The first odd value is %d\n", vec_at(intVec, vec_find_if(intVec, is_odd)));
-  printf("[10,25,40,55][begin = 2] The first odd value is %d\n", vec_at(intVec, vec_find_if(intVec, is_odd, 2, vec_size(intVec))));
+  printf("[10,25,40,55] The first odd value is %d\n",
+         vec_at(intVec, vec_find_if(intVec, is_odd)));
+  printf("[10,25,40,55][begin = 2] The first odd value is %d\n",
+         vec_at(intVec, vec_find_if(intVec, is_odd, 2, vec_size(intVec))));
   printf("\n\n");
   vec_delete(intVec);
 }
@@ -176,7 +178,7 @@ void find_test() {
 void count_test() {
   printf("--- count_test ---\n");
   VectorInt intVec;
-  
+
   vec_init(intVec);
   for (unsigned int i = 0; i < 10; ++i) {
     printf("%d ", i % 4);
@@ -185,10 +187,11 @@ void count_test() {
   printf("\n-- count:\n");
   printf("0 appears %d times\n", vec_count(intVec, 0));
   printf("3 appears %d times\n", vec_count(intVec, 3));
-  
+
   printf("\n-- count_if:\n");
   printf("Number of odd values: %d\n", vec_count_if(intVec, is_odd));
-  printf("[begin = 2, end = 5] Number of odd values: %d\n", vec_find_if(intVec, is_odd, 2, 5));
+  printf("[begin = 2, end = 5] Number of odd values: %d\n",
+         vec_find_if(intVec, is_odd, 2, 5));
   printf("\n\n");
   vec_delete(intVec);
 }
@@ -197,12 +200,12 @@ void readme_test() {
   printf("--- readme_test ---\n");
   // Declare a vector of int
   VectorInt vec;
-  
+
   // Other variables used for this test
-  int tab[] = {5,4,3,2,1,0};
+  int tab[] = {5, 4, 3, 2, 1, 0};
   int find_pos;
   int value;
-  
+
   // Initialize the vector's attributes
   vec_init(vec);
 
@@ -212,29 +215,28 @@ void readme_test() {
 
   // find the position of the value 6 in vec (-1 if not found)
   find_pos = vec_find(vec, 6);
-  
+
   // insert the tab at the position of 6
   vec_insert_array(vec, tab, sizeof(tab) / sizeof(*tab), find_pos);
 
   // insert the value -1 at the beginning of vec
   vec_insert(vec, -1, 0);
-  
+
   // delete the last value
   vec_erase(vec, vec_size(vec) - 1);
-  
+
   // Iterate over vec and print its content
-  vec_foreach(vec, value)
-    printf("%d ", value);
-  
+  vec_foreach(vec, value) printf("%d ", value);
+
   // Delete the vector and free its memory
   vec_delete(vec);
   printf("\n\n");
 }
 
 void square_num(void *i) {
- int *value = i;
- 
- (*value) *= (*value); 
+  int *value = i;
+
+  (*value) *= (*value);
 }
 
 void for_each_test() {
@@ -245,12 +247,10 @@ void for_each_test() {
   vec_init(intVec);
   for (unsigned int i = 0; i < 10; ++i)
     vec_push_back(intVec, i);
-  vec_foreach(intVec, value)
-    printf("%2d ", value);
+  vec_foreach(intVec, value) printf("%2d ", value);
   printf("\n");
   vec_for_each(intVec, square_num);
-  vec_foreach(intVec, value)
-    printf("%2d ", value);
+  vec_foreach(intVec, value) printf("%2d ", value);
   printf("\n\n");
   vec_delete(intVec);
 }
@@ -259,19 +259,50 @@ void replace_test() {
   printf("--- replace_test ---\n");
   VectorInt intVec;
   int value;
-  int tab[] = { 10, 20, 30, 30, 20, 10, 10, 20 };
+  int tab[] = {10, 20, 30, 30, 20, 10, 10, 20};
 
   vec_init(intVec);
   vec_push_values(intVec, tab, tab + 8);
   printf("Before:\n");
-  vec_foreach(intVec, value)
-    printf("%2d ", value);
+  vec_foreach(intVec, value) printf("%2d ", value);
   printf("\nAfter:\n");
   vec_replace(intVec, 20, 99);
-  vec_foreach(intVec, value)
-    printf("%2d ", value);
+  vec_foreach(intVec, value) printf("%2d ", value);
   printf("\n\n");
   vec_delete(intVec);
+}
+
+typedef struct {
+  char *name;
+  int age;
+} Person;
+
+int is_jack(const void *ptr) {
+  const Person *person = ptr;
+
+  return (strcmp(person->name, "Jack") == 0);
+}
+
+void struct_test() {
+  printf("--- struct_people__test ---\n");
+
+  Vec(Person) people;
+  Person person;
+  int jack_pos;
+
+  vec_init(people);
+  vec_push_back(people, ((Person){.name = "willie", .age = 10}));
+  vec_push_back(people, ((Person){.name = "Henry", .age = 35}));
+  vec_push_back(people, ((Person){.name = "Bessie", .age = 15}));
+  vec_push_back(people, ((Person){.name = "Stephanie", .age = 64}));
+  vec_foreach(people, person)
+      printf("Hi, I'm %s and I'm %d years old\n", person.name, person.age);
+  vec_insert(people, ((Person){.name = "Jack", .age = 75}), 2);
+  jack_pos = vec_find_if(people, is_jack);
+  printf("\nHi, I'm %s and I'm inserted between %s and %s\n",
+         vec_at(people, jack_pos).name, vec_at(people, jack_pos - 1).name,
+         vec_at(people, jack_pos + 1).name);
+  vec_delete(people);
 }
 
 int main(void) {
@@ -286,6 +317,7 @@ int main(void) {
   readme_test();
   for_each_test();
   replace_test();
+  struct_test();
 
   return 0;
 }
