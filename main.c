@@ -266,7 +266,7 @@ void replace_test() {
   vec_foreach(intVec, value)
     printf("%2d ", value);
   printf("\nAfter:\n");
-  vec_replace(intVec, 20, 99, 0);
+  vec_replace(intVec, 20, 99);
   vec_foreach(intVec, value)
     printf("%2d ", value);
   printf("\n\n");

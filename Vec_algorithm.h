@@ -79,9 +79,11 @@
   vec_for_each_3(vec, function, 0, vec_size(vec))
 
 #define vec_for_each_3(vec, function, beg, end)\
+do {\
     for (unsigned int i = beg; i < end; ++i)\
-        function(&(vec).data[i])
-  
+        function(&(vec).data[i]);\
+} while (0)
+ 
 #define distribute_vec_for_each(vec,_1,_2,_3,FUNC,...) FUNC
 #define vec_for_each(vec, ...) distribute_vec_for_each(vec, __VA_ARGS__, vec_for_each_3, _NULL, vec_for_each_1, _NULL)(vec, __VA_ARGS__)
 
@@ -93,9 +95,11 @@
   vec_replace_4(vec, value_1, value_2, 0, vec_size(vec))
 
 #define vec_replace_4(vec, value_1, value_2, beg, end)\
+do {\
     for (unsigned int i = beg; i < end; ++i)\
         if (vec_at(vec, i) == value_1)\
-            vec_at(vec, i) = value_2;
+            vec_at(vec, i) = value_2;\
+} while (0)
   
 #define distribute_vec_replace(vec,_1,_2,_3,_4,FUNC,...) FUNC
 #define vec_replace(vec, ...) distribute_vec_replace(vec, __VA_ARGS__, vec_replace_4, _NULL, vec_replace_1, _NULL)(vec, __VA_ARGS__)
