@@ -254,6 +254,25 @@ void for_each_test() {
   vec_delete(intVec);
 }
 
+void replace_test() {
+  printf("--- replace_test ---\n");
+  VectorInt intVec;
+  int value;
+  int tab[] = { 10, 20, 30, 30, 20, 10, 10, 20 };
+
+  vec_init(intVec);
+  vec_push_values(intVec, tab, tab + 8);
+  printf("Before:\n");
+  vec_foreach(intVec, value)
+    printf("%2d ", value);
+  printf("\nAfter:\n");
+  vec_replace(intVec, 20, 99, 0);
+  vec_foreach(intVec, value)
+    printf("%2d ", value);
+  printf("\n\n");
+  vec_delete(intVec);
+}
+
 int main(void) {
   basic_test();
   capacity_test();
@@ -265,5 +284,7 @@ int main(void) {
   count_test();
   readme_test();
   for_each_test();
+  replace_test();
+
   return 0;
 }

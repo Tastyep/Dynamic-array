@@ -46,6 +46,14 @@ do {\
     ++(vec).size;\
 } while (0)
 
+#define vec_push_values(vec, ptr_begin, ptr_end)\
+do {\
+    unsigned int nb_elem = ptr_end - ptr_begin;\
+    vector_expand(vec_attr(vec), vec_data_size(vec), nb_elem);\
+    for (unsigned int i = 0; i < nb_elem; ++i)\
+        vec_push_back(vec, *(ptr_begin + i));\
+} while (0)
+
 #define vec_insert(vec, value, position)\
 do {\
     vector_expand(vec_attr(vec), vec_data_size(vec), 1);\
