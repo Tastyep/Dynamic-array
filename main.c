@@ -103,6 +103,7 @@ void insertion_test() {
   printf("\n");
   vec_delete(intVec);
   vec_delete(appendVec);
+  vec_delete(str);
 }
 
 int compare(const void *a, const void *b) {
