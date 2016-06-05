@@ -300,8 +300,8 @@ void struct_test() {
   vec_insert(people, ((Person){.name = "Jack", .age = 75}), 2);
   jack_pos = vec_find_if(people, is_jack);
   printf("\nHi, I'm %s and I'm inserted between %s and %s\n",
-         vec_at(people, jack_pos).name, vec_at(people, jack_pos - 1).name,
-         vec_at(people, jack_pos + 1).name);
+         vec_at(people, jack_pos).name, vec_prev(people, jack_pos).name,
+         vec_next(people, jack_pos).name);
   vec_delete(people);
 }
 

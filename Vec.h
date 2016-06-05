@@ -90,6 +90,13 @@ do {\
 #define vec_at(vec, idx)\
     (vec).data[idx]
     
+#define vec_prev(vec, idx)\
+    vec_at(vec, ((idx) - 1))
+
+#define vec_next(vec, idx)\
+    vec_at(vec, ((idx) + 1))
+
+
 #define vec_fill(vec, value)\
 do {\
     if (sizeof((vec).data) == 1)\
