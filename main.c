@@ -40,8 +40,11 @@ void resize_test() {
   int value;
 
   vec_init(intVec);
-  vec_resize(intVec, 40, 1);
 
+  vec_resize(intVec, 20);
+  printf("Capacity: %u, Size: %u\n", vec_capacity(intVec), vec_size(intVec));
+
+  vec_resize(intVec, 40, 1);
   printf("Capacity: %u, Size: %u\n", vec_capacity(intVec), vec_size(intVec));
   vec_foreach(intVec, value) { printf("%d ", value); }
   printf("\n\n");

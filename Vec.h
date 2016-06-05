@@ -108,8 +108,16 @@ do {\
 
 #define vec_reserve(vec, size)\
     vector_reserve((char **)(&(vec).data), &(vec).capacity, vec_data_size(vec), size)
-    
-#define vec_resize(vec, vec_size, value)\
+
+#define vec_resize_1(vec, vec_size)\
+do {\
+    vec_reserve(vec, vec_size);\
+    if ((vec).size < vec_size) {\
+        (vec).size = (vec_size);\
+    }\
+} while (0)
+
+#define vec_resize_2(vec, vec_size, value)\
 do {\
     vec_reserve(vec, vec_size);\
     if ((vec).size < vec_size) {\
@@ -117,6 +125,9 @@ do {\
     }\
     vec_fill(vec, value);\
 } while (0)
+
+#define distribute_vec_resize(vec,_1,_2,FUNC,...) FUNC
+#define vec_resize(vec, ...) distribute_vec_resize(vec, __VA_ARGS__, vec_resize_2, vec_resize_1, _NULL)(vec, __VA_ARGS__)
 
 /*
 ** vec_erase(vec, position, [end])
