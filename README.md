@@ -102,6 +102,33 @@ Outputs:
   Hi, I'm Jack and I'm inserted between Henry and Bessie
 ```
 
-###Available functions
 
-TODO
+###Available functions
+#####Capacity:
+| Function          | Parameters                   | Descrption                                |
+|-------------------|------------------------------|-------------------------------------------|
+| vec_size          | (v)                          | Return size                               |
+| vec_resize        | (v, size, [value])           | Change size                               |
+| vec_capacity      | (v)                          | Return size of allocated storage capacity |
+| vec_empty         | (v)                          | Test whether vector is empty              |
+| vec_reserve       | (v, size)                    | Request a change in capacity              |
+
+#####Element access:
+| Function          | Parameters                   | Description                               |
+|-------------------|------------------------------|-------------------------------------------|
+| vec_at            | (v, idx)                     | Access element                            |
+| vec_front         | (v)                          | Access first element                      |
+| vec_back          | (v)                          | Access last element                       |
+| vec_data          | (v)                          | Access data                               |
+
+#####Modifiers:
+| Function          | Parameters                   | Description                               |
+|-------------------|------------------------------|-------------------------------------------|
+| vec_push_back     | (v, value)                   | Add element at the end                    |
+| vec_pop_back      | (v)                          | Delete last element                       |
+| vec_insert        | (v, value, position)         | Insert elements                           |
+| vec_insert_array  | (v, array, length, position) | Insert an array of elements               |
+| vec_insert_string | (v, string, position)        | Insert a string and check for \0          |
+| vec_erase         | (v, position, [end])         | Erase elements                            |
+| vec_clear         | (v)                          | Clear content                             |
+| vec_delete        | (v)                          | Clear content                             |
