@@ -18,7 +18,7 @@ For convenience the following types are already declared:
 | double          | VectorDouble  |
 
 ###Usage
-
+##### Basic example
 ```c
   // Declare a vector of int
   VectorInt vec;
@@ -54,6 +54,52 @@ For convenience the following types are already declared:
   
   // Delete the vector and free its memory
   vec_delete(vec);
+```
+
+Outputs:
+
+```
+  -1 0 1 2 3 4 5 5 4 3 2 1 0 6 7 8 
+```
+
+##### Advanced example
+
+```c
+  Vec(Person) people;
+  Person person;
+  int jack_pos;
+
+  vec_init(people);
+  
+  vec_push_back(people, ((Person){.name = "willie", .age = 10}));
+  vec_push_back(people, ((Person){.name = "Henry", .age = 35}));
+  vec_push_back(people, ((Person){.name = "Bessie", .age = 15}));
+  vec_push_back(people, ((Person){.name = "Stephanie", .age = 64}));
+  
+  vec_foreach(people, person)
+      printf("Hi, I'm %s and I'm %d years old\n", person.name, person.age);
+  
+  vec_insert(people, ((Person){.name = "Jack", .age = 75}), 2);
+  
+  jack_pos = vec_find_if(people, is_jack);
+  
+  printf("\nHi, I'm %s and I'm inserted between %s and %s\n",
+         vec_at(people, jack_pos).name,
+         vec_prev(people, jack_pos).name,
+         vec_next(people, jack_pos).name);
+  
+  vec_delete(people);
+```
+
+Outputs:
+
+```
+  Hi, I'm willie and I'm 10 years old
+  Hi, I'm Henry and I'm 35 years old
+  Hi, I'm Bessie and I'm 15 years old
+  Hi, I'm Stephanie and I'm 64 years old
+  
+  Hi, I'm Jack and I'm inserted between Henry and Bessie
 ```
 
 ###Available functions
