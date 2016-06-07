@@ -13,7 +13,7 @@ struct {\
     union {\
         T buffer_value;\
         unsigned char value_bytes[sizeof(T)];\
-    };\
+    } buffer;\
 }
 
 #define vec_attr(vec)\

@@ -16,8 +16,8 @@
     vec_find_3(vec, value, 0, (vec).size)
 
 #define vec_find_3(vec, value, beg, end)\
-    ((vec).buffer_value = value,\
-     vector_find((char *)vec_data(vec), vec_data_size(vec), (vec).value_bytes, beg, end))
+    ((vec).buffer.buffer_value = value,\
+     vector_find((char *)vec_data(vec), vec_data_size(vec), (vec).buffer.value_bytes, beg, end))
     
 #define distribute_vec_find(vec,_1,_2,_3,FUNC,...) FUNC
 #define vec_find(vec, ...) distribute_vec_find(vec, __VA_ARGS__, vec_find_3, _NULL, vec_find_1, _NULL)(vec, __VA_ARGS__)
@@ -43,8 +43,8 @@
     vec_count_3(vec, value, 0, vec_size(vec))
 
 #define vec_count_3(vec, value, beg, end)\
-    ((vec).buffer_value = value,\
-     vector_count((char *)vec_data(vec), vec_data_size(vec), (vec).value_bytes, beg, end))
+    ((vec).buffer.buffer_value = value,\
+     vector_count((char *)vec_data(vec), vec_data_size(vec), (vec).buffer.value_bytes, beg, end))
     
 #define distribute_vec_count(vec,_1,_2,_3,FUNC,...) FUNC
 #define vec_count(vec, ...) distribute_vec_count(vec, __VA_ARGS__, vec_count_3, _NULL, vec_count_1, _NULL)(vec, __VA_ARGS__)
