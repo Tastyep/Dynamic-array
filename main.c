@@ -30,7 +30,8 @@ void capacity_test() {
   vec_reserve(&intVec, 30);
 
   vec_fill(&intVec, 1);
-  printf("Capacity: %u, Size: %u\n\n", vec_capacity(&intVec), vec_size(&intVec));
+  printf("Capacity: %u, Size: %u\n\n", vec_capacity(&intVec),
+         vec_size(&intVec));
   vec_delete(&intVec);
 }
 
